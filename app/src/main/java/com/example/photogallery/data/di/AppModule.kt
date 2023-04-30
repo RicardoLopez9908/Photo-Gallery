@@ -1,9 +1,12 @@
 package com.example.photogallery.data.di
 
+import android.content.Context
+import com.example.photogallery.PhotoGalleryApp
 import com.example.photogallery.data.api.PhotoGalleryApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,4 +24,9 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(PhotoGalleryApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApplication(@ApplicationContext app: Context): PhotoGalleryApp =
+        app as PhotoGalleryApp
 }

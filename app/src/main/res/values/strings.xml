@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Photo Gallery</string>
+    <string name="albums_title">Albums</string>
+    <string name="retry_button">Volver a intentar</string>
+    <string name="back_button">Ir atrás</string>
+    <string name="menu_button">Desplegar menu</string>
+    <string name="dark_mode_button">Modo oscuro</string>
+    <string name="light_mode_button">Modo claro</string>
 </resources>

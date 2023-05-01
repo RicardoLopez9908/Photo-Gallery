@@ -2,4 +2,15 @@
 <resources>
     <!--Base paddings-->
     <dimen name="base_horizontal_padding">16dp</dimen>
+    <dimen name="base_item_spacing_padding">16dp</dimen>
+
+    <!--Common components-->
+    <dimen name="default_search_vertical_padding">24dp</dimen>
+    <dimen name="custom_async_card_elevation">8dp</dimen>
+    <dimen name="custom_card_content_padding">12dp</dimen>
+    <dimen name="custom_card_title_top_padding">8dp</dimen>
+
+    <!--Albums & Photos paddings-->
+    <dimen name="text_feedback_top_padding">24dp</dimen>
+
 </resources>

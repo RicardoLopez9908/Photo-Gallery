@@ -21,7 +21,7 @@ import com.example.photogallery.ui.theme.LocalIsDarkMode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BasicToolbar(
+fun DefaultToolbar(
     scrollBehavior: TopAppBarScrollBehavior,
     title: String? = null,
     onClickBackButton: (() -> Unit)? = null,
@@ -66,6 +66,17 @@ private fun BackButton(onClick: () -> Unit) {
         Icon(
             painter = painterResource(id = R.drawable.ic_arrow_back),
             contentDescription = stringResource(id = R.string.back_button),
+            tint = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Composable
+fun RefreshButton(onClick: () -> Unit) {
+    IconButton(onClick = onClick) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_refresh),
+            contentDescription = stringResource(id = R.string.retry_button),
             tint = MaterialTheme.colorScheme.primary
         )
     }

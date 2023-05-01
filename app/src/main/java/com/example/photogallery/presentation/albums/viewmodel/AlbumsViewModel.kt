@@ -7,8 +7,9 @@ import com.example.photogallery.util.Response
 import com.example.photogallery.util.Response.Loading
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,18 +17,27 @@ class AlbumsViewModel @Inject constructor(
     private val repository: PhotoGalleryRepository
 ) : BaseViewModel() {
 
-    init { getAlbums() }
+    init {
+        getAlbums()
+    }
 
     fun getAlbums() {
         screenContent.tryEmit(Loading)
         viewModelScope.launch(Dispatchers.Main + coroutineExceptionHandler) {
             val response = repository.getAlbums()
 
-            if (response is Response.Success && response.data.isNullOrEmpty()) {
-                screenContent.emit(Response.Error(Exception("Error example"))) // todo: create custom Exception
-            } else {
-                screenContent.emit(response)
+            if (response is Response.Success) {
+                response.data.orEmpty().map { album ->
+                    async {
+                        val photos = repository.getPhotos(albumId = album.id)
+                        if (photos is Response.Success && !photos.data.isNullOrEmpty()) {
+                            album.photoDataList = photos.data
+                        }
+                    }
+                }.awaitAll()
             }
+
+            screenContent.emit(response)
         }
     }
 }

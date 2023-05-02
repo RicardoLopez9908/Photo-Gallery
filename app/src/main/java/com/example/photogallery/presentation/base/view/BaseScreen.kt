@@ -37,7 +37,7 @@ fun BaseScreenStateHandler(
 @Composable
 fun DefaultScrollableScreenWithToolbar(
     title: String? = null,
-    changeThemeColor: () -> Unit,
+    changeThemeColor: (Boolean) -> Unit,
     onTapRetry: () -> Unit,
     onTapBack: (() -> Unit)? = null,
     columns: Int = 2,

@@ -32,7 +32,7 @@ fun PhotosScreen(
     onTapBack: () -> Unit,
     response: Response<Any?>,
     onTapRetry: () -> Unit,
-    changeThemeColor: () -> Unit,
+    changeThemeColor: (Boolean) -> Unit,
     navigateToPhotoDetail: (url: String, title: String) -> Unit
 ) {
     BaseScreenStateHandler(

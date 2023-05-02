@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets
 @Composable
 fun SetupNavGraph(
     navController: NavHostController,
-    changeThemeColor: () -> Unit
+    changeThemeColor: (Boolean) -> Unit
 ) {
     NavHost(
         navController = navController,

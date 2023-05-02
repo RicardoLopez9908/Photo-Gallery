@@ -5,5 +5,5 @@ data class AlbumData(
     val title: String,
     val userId: Int? = null,
     // set this value manually:
-    var photoDataList: List<PhotoData>? = null
+    var thumbnailUrl: String? = null
 )

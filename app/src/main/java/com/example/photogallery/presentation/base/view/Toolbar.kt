@@ -22,15 +22,15 @@ import com.example.photogallery.ui.theme.LocalIsDarkMode
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultToolbar(
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
     title: String? = null,
-    onClickBackButton: (() -> Unit)? = null,
+    onTapBack: (() -> Unit)? = null,
     menuContent: (@Composable ColumnScope.() -> Unit)? = null
 ) {
     MediumTopAppBar(
         scrollBehavior = scrollBehavior,
         navigationIcon = {
-            onClickBackButton?.let { BackButton(it) }
+            onTapBack?.let { BackButton(it) }
         },
         title = { title?.let { Text(text = it) } },
         actions = {

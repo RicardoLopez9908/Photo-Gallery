@@ -19,7 +19,7 @@ import com.example.photogallery.util.Response
 @Composable
 fun BaseScreenStateHandler(
     response: Response<Any?>,
-    onClickRetry: () -> Unit,
+    onTapRetry: () -> Unit,
     successContent: @Composable () -> Unit
 ) {
     when (response) {
@@ -27,7 +27,7 @@ fun BaseScreenStateHandler(
         is Response.Loading -> LoadingScreen()
         is Response.Error -> ErrorScreen(
             e = response.exception,
-            retryOnClick = onClickRetry
+            onTapRetry = onTapRetry
         )
     }
 }
@@ -38,7 +38,9 @@ fun BaseScreenStateHandler(
 fun DefaultScrollableScreenWithToolbar(
     title: String? = null,
     changeThemeColor: () -> Unit,
-    onClickRetry: () -> Unit,
+    onTapRetry: () -> Unit,
+    onTapBack: (() -> Unit)? = null,
+    columns: Int = 2,
     content: LazyStaggeredGridScope.() -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -49,9 +51,10 @@ fun DefaultScrollableScreenWithToolbar(
             DefaultToolbar(
                 scrollBehavior = scrollBehavior,
                 title = title,
+                onTapBack = onTapBack,
                 menuContent = {
                     ChangeThemeButton(changeThemeColor)
-                    RefreshButton(onClickRetry)
+                    RefreshButton(onTapRetry)
                 }
             )
         }
@@ -60,7 +63,7 @@ fun DefaultScrollableScreenWithToolbar(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(horizontal = dimensionResource(id = R.dimen.base_horizontal_padding)),
-            columns = StaggeredGridCells.Fixed(2),
+            columns = StaggeredGridCells.Fixed(columns),
             verticalItemSpacing = dimensionResource(id = R.dimen.base_item_spacing_padding),
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.base_item_spacing_padding)),
             content = content

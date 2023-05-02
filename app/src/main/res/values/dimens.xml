@@ -13,4 +13,6 @@
     <!--Albums & Photos paddings-->
     <dimen name="text_feedback_top_padding">24dp</dimen>
 
+    <!--PhotoDetail paddings-->
+    <dimen name="text_title_top_padding">24dp</dimen>
 </resources>

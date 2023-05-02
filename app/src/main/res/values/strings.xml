@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Photo Gallery</string>
     <string name="albums_title">Albums</string>
+    <string name="photos_title">Fotos</string>
     <string name="retry_button">Volver a intentar</string>
     <string name="refresh_button">Refrescar información</string>
     <string name="back_button">Ir atrás</string>
@@ -8,5 +9,6 @@
     <string name="dark_mode_button">Modo oscuro</string>
     <string name="light_mode_button">Modo claro</string>
     <string name="empty_albums">No se encontraron albums.</string>
+    <string name="empty_photos">No se encontraron fotos.</string>
     <string name="search_label">Buscar</string>
 </resources>

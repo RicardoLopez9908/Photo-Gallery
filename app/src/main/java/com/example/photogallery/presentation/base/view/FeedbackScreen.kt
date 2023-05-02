@@ -18,7 +18,7 @@ import com.example.photogallery.R
 @Composable
 fun ErrorScreen(
     e: Exception,
-    retryOnClick: () -> Unit
+    onTapRetry: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -36,7 +36,7 @@ fun ErrorScreen(
         Spacer(modifier = Modifier.weight(1f))
         JumperButton(
             text = stringResource(id = R.string.retry_button),
-            onClick = retryOnClick
+            onClick = onTapRetry
         )
     }
 }

@@ -1,8 +1,9 @@
 package com.example.photogallery.data.di
 
 import android.content.Context
-import com.example.photogallery.PhotoGalleryApp
 import com.example.photogallery.data.api.PhotoGalleryApi
+import com.example.photogallery.data.source.preferences.PreferencesImpl
+import com.example.photogallery.domain.source.preferences.Preferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +28,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApplication(@ApplicationContext app: Context): PhotoGalleryApp =
-        app as PhotoGalleryApp
+    fun providePreferences(@ApplicationContext app: Context): Preferences =
+        PreferencesImpl(app)
 }

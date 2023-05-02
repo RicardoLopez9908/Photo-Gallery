@@ -83,9 +83,9 @@ fun RefreshButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun ChangeThemeButton(onClick: () -> Unit) {
+fun ChangeThemeButton(onClick: (Boolean) -> Unit) {
     val isDarkMode = LocalIsDarkMode.current
-    IconButton(onClick = onClick) {
+    IconButton(onClick = { onClick(!isDarkMode) }) {
         Icon(
             painter = painterResource(id = if (isDarkMode) R.drawable.ic_light_mode else R.drawable.ic_dark_mode),
             contentDescription = stringResource(id = R.string.dark_mode_button),

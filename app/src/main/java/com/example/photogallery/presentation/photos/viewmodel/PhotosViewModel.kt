@@ -23,14 +23,14 @@ class PhotosViewModel @Inject constructor(
     }
 
     fun getPhotos() {
-        screenContent.tryEmit(Response.Loading)
+        _screenContent.tryEmit(Response.Loading)
         viewModelScope.launch(contextAndErrorHandler) {
             albumId?.let {
                 val response = repository.getPhotos(albumId)
 
-                screenContent.emit(response)
+                _screenContent.emit(response)
             } ?: run {
-                screenContent.emit(Response.Error(exception = Exception("No recibimos un albumId"))) // TODO: create custom exception
+                _screenContent.emit(Response.Error(exception = Exception("No recibimos un albumId"))) // TODO: create custom exception
             }
         }
     }

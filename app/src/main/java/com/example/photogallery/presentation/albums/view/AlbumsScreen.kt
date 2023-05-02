@@ -29,7 +29,7 @@ import com.example.photogallery.util.Response
 fun AlbumsScreen(
     response: Response<Any?>,
     onTapRetry: () -> Unit,
-    changeThemeColor: () -> Unit,
+    changeThemeColor: (Boolean) -> Unit,
     navigateToPhotos: (albumId: Int) -> Unit
 ) {
     BaseScreenStateHandler(

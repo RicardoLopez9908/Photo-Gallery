@@ -21,7 +21,7 @@ class AlbumsViewModel @Inject constructor(
     }
 
     fun getAlbums() {
-        screenContent.tryEmit(Loading)
+        _screenContent.tryEmit(Loading)
         viewModelScope.launch(contextAndErrorHandler) {
             val response = repository.getAlbums()
 
@@ -35,8 +35,7 @@ class AlbumsViewModel @Inject constructor(
                     }
                 }.awaitAll()
             }
-
-            screenContent.emit(response)
+            _screenContent.emit(response)
         }
     }
 }

@@ -9,4 +9,8 @@ interface PhotoGalleryRepository {
     suspend fun getAlbums(): Response<List<AlbumData>>
 
     suspend fun getPhotos(albumId: Int): Response<List<PhotoData>>
+
+    suspend fun putDarkThemeValue(value: Boolean)
+
+    suspend fun getDarkThemeValue(): Boolean?
 }

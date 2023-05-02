@@ -1,10 +1,11 @@
-package com.example.photogallery.presentation.albums.view
+package com.example.photogallery.presentation.photos.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,8 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.example.photogallery.R
-import com.example.photogallery.domain.model.AlbumData
+import com.example.photogallery.domain.model.PhotoData
 import com.example.photogallery.presentation.base.view.BaseScreenStateHandler
 import com.example.photogallery.presentation.base.view.CustomAsyncCardImage
 import com.example.photogallery.presentation.base.view.DefaultScrollableScreenWithToolbar
@@ -26,29 +28,32 @@ import com.example.photogallery.util.Response
 @OptIn(ExperimentalFoundationApi::class)
 @Suppress("UNCHECKED_CAST")
 @Composable
-fun AlbumsScreen(
+fun PhotosScreen(
+    onTapBack: () -> Unit,
     response: Response<Any?>,
     onTapRetry: () -> Unit,
     changeThemeColor: () -> Unit,
-    navigateToPhotos: (albumId: Int) -> Unit
+    navigateToPhotoDetail: (url: String, title: String) -> Unit
 ) {
     BaseScreenStateHandler(
         onTapRetry = onTapRetry,
         response = response
     ) {
-        val albumList = (response as Response.Success<List<AlbumData>>).data
+        val photoList = (response as Response.Success<List<PhotoData>>).data
         var searchState by rememberSaveable { mutableStateOf("") }
-        val albumListFiltered = if (searchState.isEmpty()) {
-            albumList
+        val photoListFiltered = if (searchState.isEmpty()) {
+            photoList
         } else {
-            albumList?.filter {
+            photoList?.filter {
                 it.title.contains(searchState, ignoreCase = true)
             }
         }
         DefaultScrollableScreenWithToolbar(
-            title = stringResource(id = R.string.albums_title),
+            title = stringResource(id = R.string.photos_title),
             changeThemeColor = changeThemeColor,
-            onTapRetry = onTapRetry
+            onTapRetry = onTapRetry,
+            onTapBack = onTapBack,
+            columns = 3
         ) {
             item(span = StaggeredGridItemSpan.FullLine) {
                 DefaultSearch(
@@ -58,10 +63,10 @@ fun AlbumsScreen(
                     }
                 )
             }
-            if (albumListFiltered.isNullOrEmpty()) {
+            if (photoListFiltered.isNullOrEmpty()) {
                 item(span = StaggeredGridItemSpan.FullLine) {
                     Text(
-                        text = stringResource(id = R.string.empty_albums),
+                        text = stringResource(id = R.string.empty_photos),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = dimensionResource(id = R.dimen.text_feedback_top_padding)),
@@ -69,14 +74,14 @@ fun AlbumsScreen(
                     )
                 }
             } else {
-                items(albumListFiltered) { item ->
-                    item.thumbnailUrl?.let { thumbnailUrl ->
-                        CustomAsyncCardImage(
-                            onClick = { navigateToPhotos(item.id) },
-                            title = item.title,
-                            thumbnailUrl = thumbnailUrl
-                        )
-                    }
+                items(photoListFiltered) { item ->
+                    CustomAsyncCardImage(
+                        onClick = { navigateToPhotoDetail(item.url, item.title) },
+                        title = item.title,
+                        thumbnailUrl = item.thumbnailUrl,
+                        shape = CutCornerShape(0.dp),
+                        titleMaxLines = 2
+                    )
                 }
             }
         }

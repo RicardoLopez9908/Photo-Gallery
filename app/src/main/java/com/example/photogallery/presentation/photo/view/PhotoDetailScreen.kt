@@ -1,16 +1,17 @@
-package com.example.photogallery.presentation.base.view
+package com.example.photogallery.presentation.photo.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ShapeDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,60 +20,49 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.photogallery.R
+import com.example.photogallery.presentation.base.view.DefaultToolbar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomAsyncCardImage(
-    onClick: () -> Unit,
-    title: String,
-    thumbnailUrl: String,
-    shape: Shape = ShapeDefaults.Medium,
-    titleMaxLines: Int = Int.MAX_VALUE
+fun PhotoDetailScreen(
+    onTapBack: () -> Unit,
+    title: String?,
+    photoUrl: String
 ) {
     val localDensity = LocalDensity.current
-    var cardWidth by remember { mutableStateOf(0.dp) }
-
-    val alphaVisibility = if (cardWidth == 0.dp) 0f else 1f
-
+    var imageWidth by remember { mutableStateOf(0.dp) }
     var isLoading by remember { mutableStateOf(false) }
 
-    Card(
-        modifier = Modifier.alpha(alphaVisibility),
-        onClick = onClick,
-        elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = dimensionResource(id = R.dimen.custom_async_card_elevation)
-        )
-    ) {
+    Scaffold(
+        topBar = {
+            DefaultToolbar(onTapBack = onTapBack)
+        }
+    ) { paddingValues ->
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .alpha(alphaVisibility)
-                .padding(dimensionResource(id = R.dimen.custom_card_content_padding))
-                .onGloballyPositioned { coordinates ->
-                    cardWidth = with(localDensity) { coordinates.size.width.toDp() }
-                }
+                .padding(paddingValues)
+                .padding(horizontal = dimensionResource(id = R.dimen.base_horizontal_padding))
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
         ) {
             Box {
                 AsyncImage(
-                    model = thumbnailUrl,
+                    model = photoUrl,
                     contentDescription = title,
                     modifier = Modifier
-                        .alpha(if (isLoading) 0f else 1f)
                         .fillMaxWidth()
-                        .clip(shape = shape),
+                        .onGloballyPositioned { coordinates ->
+                            imageWidth = with(localDensity) { coordinates.size.width.toDp() }
+                        },
                     contentScale = ContentScale.FillWidth,
                     onLoading = { isLoading = true },
                     onSuccess = { isLoading = false },
@@ -82,8 +72,7 @@ fun CustomAsyncCardImage(
                 if (isLoading) {
                     Box(
                         modifier = Modifier
-                            .alpha(alphaVisibility)
-                            .size(cardWidth),
+                            .size(imageWidth),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(
@@ -92,16 +81,16 @@ fun CustomAsyncCardImage(
                     }
                 }
             }
-            Text(
-                modifier = Modifier
-                    .alpha(alphaVisibility)
-                    .padding(top = dimensionResource(id = R.dimen.custom_card_title_top_padding)),
-                text = title,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = titleMaxLines,
-                overflow = TextOverflow.Ellipsis
-            )
+            title?.let {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = dimensionResource(id = R.dimen.text_title_top_padding)),
+                    text = it,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineLarge
+                )
+            }
         }
     }
 }

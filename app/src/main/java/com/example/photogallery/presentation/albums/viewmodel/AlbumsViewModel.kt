@@ -6,7 +6,6 @@ import com.example.photogallery.presentation.base.viewmodel.BaseViewModel
 import com.example.photogallery.util.Response
 import com.example.photogallery.util.Response.Loading
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
@@ -23,15 +22,15 @@ class AlbumsViewModel @Inject constructor(
 
     fun getAlbums() {
         screenContent.tryEmit(Loading)
-        viewModelScope.launch(Dispatchers.Main + coroutineExceptionHandler) {
+        viewModelScope.launch(contextAndErrorHandler) {
             val response = repository.getAlbums()
 
             if (response is Response.Success) {
                 response.data.orEmpty().map { album ->
                     async {
                         val photos = repository.getPhotos(albumId = album.id)
-                        if (photos is Response.Success && !photos.data.isNullOrEmpty()) {
-                            album.photoDataList = photos.data
+                        if (photos is Response.Success) {
+                            album.thumbnailUrl = photos.data?.first()?.thumbnailUrl
                         }
                     }
                 }.awaitAll()

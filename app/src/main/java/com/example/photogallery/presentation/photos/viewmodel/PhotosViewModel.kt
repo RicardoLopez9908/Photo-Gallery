@@ -1,5 +1,7 @@
 package com.example.photogallery.presentation.photos.viewmodel
 
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.photogallery.domain.repository.PhotoGalleryRepository
@@ -17,7 +19,8 @@ class PhotosViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val albumId: Int? = savedStateHandle[ALBUM_ID]
+    @VisibleForTesting(otherwise = PRIVATE)
+    val albumId: Int? = savedStateHandle[ALBUM_ID]
 
     init {
         getPhotos()

@@ -88,7 +88,7 @@ fun ChangeThemeButton(onClick: (Boolean) -> Unit) {
     IconButton(onClick = { onClick(!isDarkMode) }) {
         Icon(
             painter = painterResource(id = if (isDarkMode) R.drawable.ic_light_mode else R.drawable.ic_dark_mode),
-            contentDescription = stringResource(id = R.string.dark_mode_button),
+            contentDescription = stringResource(id = if (isDarkMode) R.string.light_mode_button else R.string.dark_mode_button),
             tint = MaterialTheme.colorScheme.primary
         )
     }

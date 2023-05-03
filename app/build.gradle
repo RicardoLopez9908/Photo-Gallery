@@ -21,6 +21,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        buildConfigField "String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\""
     }
 
     buildTypes {
@@ -37,6 +38,7 @@ android {
         jvmTarget = '17'
     }
     buildFeatures {
+        buildConfig = true
         compose true
     }
     composeOptions {
@@ -76,6 +78,8 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    // Compose MotionLayout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")

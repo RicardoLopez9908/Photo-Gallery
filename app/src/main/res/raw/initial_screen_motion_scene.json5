@@ -1,0 +1,171 @@
+{
+  ConstraintSets: {
+    start: {
+      horizontal_guideline: {
+        type: 'hGuideline',
+        percent: 0.40
+      },
+      picture_example_1 : {
+        width: 150,
+        alpha: 0,
+        top: ['parent','bottom'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_2 : {
+        width: 150,
+        alpha: 0,
+        top: ['parent','bottom'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_3 : {
+        width: 150,
+        alpha: 0,
+        top: ['parent','bottom'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_4 : {
+        width: 150,
+        alpha: 0,
+        top: ['parent','bottom'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_5 : {
+        width: 150,
+        alpha: 0,
+        top: ['parent','bottom'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_6 : {
+        width: 150,
+        alpha: 0,
+        bottom: ['parent','top'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_7 : {
+        width: 150,
+        alpha: 0,
+        bottom: ['parent','top'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_8 : {
+        width: 150,
+        alpha: 0,
+        bottom: ['parent','top'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      picture_example_9 : {
+        width: 150,
+        alpha: 0,
+        bottom: ['parent','top'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      },
+      title_text: {
+        alpha: 0,
+        start: ['parent','start',16],
+        end: ['parent','end',16],
+        top: ['horizontal_guideline','top'],
+        bottom: ['horizontal_guideline','bottom']
+      },
+      start_button: {
+        alpha: 0,
+        top: ['parent','bottom'],
+        start: ['parent','start'],
+        end: ['parent','end']
+      }
+    },
+    end: {
+      horizontal_guideline: {
+        type: 'hGuideline',
+        percent: 0.40
+      },
+      "picture_example_1": {
+        width: 100,
+        alpha: 1,
+        start: ['parent','start',0],
+        end: ['parent','end',16],
+        top: ['parent','top']
+      },
+      "picture_example_2": {
+        width: 100,
+        alpha: 1,
+        end: ['parent','end',16],
+        top: ['title_text','top'],
+        bottom: ['horizontal_guideline','top']
+      },
+      "picture_example_3": {
+        width: 100,
+        alpha: 1,
+        start: ['picture_example_8','start',40],
+        end: ['parent','end'],
+        top: ['title_text','top',12],
+        bottom: ['start_button','top']
+      },
+      "picture_example_4": {
+        width: 100,
+        alpha: 1,
+        start: ['parent','start',28],
+        bottom: ['start_button','top']
+      },
+      "picture_example_5": {
+        width: 100,
+        alpha: 1,
+        start: ['parent','start',0],
+        top: ['title_text','top']
+      },
+      "picture_example_6": {
+        width: 100,
+        alpha: 1,
+        end: ['parent','end',80],
+        top: ['parent','top',40]
+      },
+      "picture_example_7": {
+        width: 100,
+        alpha: 1,
+        start: ['parent','start',60],
+        top: ['parent','top',30],
+      },
+      "picture_example_8": {
+        width: 100,
+        alpha: 1,
+        start: ['parent','start',-60],
+        end: ['parent','end'],
+        top: ['title_text','top'],
+        bottom: ['start_button','top']
+      },
+      "picture_example_9": {
+        width: 100,
+        alpha: 1,
+        end: ['parent','end'],
+        bottom: ['start_button','top']
+      },
+      title_text: {
+        alpha: 1,
+        start: ['parent','start',16],
+        end: ['parent','end',16],
+        top: ['horizontal_guideline','top'],
+        bottom: ['horizontal_guideline','bottom']
+      },
+      start_button: {
+        alpha: 1,
+        bottom: ['parent','bottom',24],
+        start: ['parent','start'],
+        end: ['parent','end']
+      }
+    }
+  },
+  Transitions: {
+    default: {
+      from: 'start',
+      to:'end'
+    }
+  }
+}

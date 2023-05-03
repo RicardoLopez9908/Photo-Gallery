@@ -10,6 +10,10 @@
     <dimen name="custom_card_content_padding">12dp</dimen>
     <dimen name="custom_card_title_top_padding">8dp</dimen>
 
+    <!--Initial screen paddings-->
+    <dimen name="start_button_bottom_padding">8dp</dimen>
+    <dimen name="initial_title_text_padding">16dp</dimen>
+
     <!--Albums & Photos paddings-->
     <dimen name="text_feedback_top_padding">24dp</dimen>
 

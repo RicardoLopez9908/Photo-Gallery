@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +33,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.photogallery.R
+
+const val TestTagAsyncImageBox = "TestTagAsyncImageBox"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +68,7 @@ fun CustomAsyncCardImage(
                     cardWidth = with(localDensity) { coordinates.size.width.toDp() }
                 }
         ) {
-            Box {
+            Box(Modifier.testTag(TestTagAsyncImageBox)) {
                 AsyncImage(
                     model = thumbnailUrl,
                     contentDescription = title,

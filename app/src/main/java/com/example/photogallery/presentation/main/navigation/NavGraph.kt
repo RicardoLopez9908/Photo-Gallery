@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
 @Composable
 fun SetupNavGraph(
     navController: NavHostController,
-    changeThemeColor: (Boolean) -> Unit
+    albumsViewModel: AlbumsViewModel
 ) {
     NavHost(
         navController = navController,
@@ -40,13 +40,12 @@ fun SetupNavGraph(
             }
         }
         composable(route = Screen.Albums.route) {
-            val viewModel = hiltViewModel<AlbumsViewModel>()
-            val state = viewModel.screenContent.collectAsState()
+            val state = albumsViewModel.screenContent.collectAsState()
 
             AlbumsScreen(
-                onTapRetry = viewModel::getAlbums,
+                onTapRetry = albumsViewModel::getAlbums,
                 response = state.value,
-                changeThemeColor = changeThemeColor,
+                changeThemeColor = albumsViewModel::saveIsDarkThemeValue,
                 navigateToPhotos = { albumId ->
                     navController.navigate("${Screen.Photos.route}/$albumId")
                 }
@@ -63,7 +62,7 @@ fun SetupNavGraph(
                 onTapBack = navController::popBackStack,
                 onTapRetry = viewModel::getPhotos,
                 response = state.value,
-                changeThemeColor = changeThemeColor,
+                changeThemeColor = albumsViewModel::saveIsDarkThemeValue,
                 navigateToPhotoDetail = { url, title ->
                     val encodedUrl = URLEncoder.encode(url, StandardCharsets.UTF_8.toString())
                     navController.navigate("${Screen.PhotoDetail.route}/$encodedUrl/$title")

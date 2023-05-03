@@ -6,8 +6,11 @@ import com.example.photogallery.presentation.base.viewmodel.BaseViewModel
 import com.example.photogallery.util.Response
 import com.example.photogallery.util.Response.Loading
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,7 +19,11 @@ class AlbumsViewModel @Inject constructor(
     private val repository: PhotoGalleryRepository
 ) : BaseViewModel() {
 
+    private var _isDarkTheme = MutableStateFlow<Boolean?>(null)
+    var isDarkTheme = _isDarkTheme.asStateFlow()
+
     init {
+        getIsDarkThemeValue()
         getAlbums()
     }
 
@@ -36,6 +43,20 @@ class AlbumsViewModel @Inject constructor(
                 }.awaitAll()
             }
             _screenContent.emit(response)
+        }
+    }
+
+    fun saveIsDarkThemeValue(isDark: Boolean) {
+        viewModelScope.launch(Dispatchers.Main) {
+            repository.putDarkThemeValue(isDark)
+            _isDarkTheme.emit(isDark)
+        }
+    }
+
+    private fun getIsDarkThemeValue() {
+        viewModelScope.launch(Dispatchers.Main) {
+            val isDark = repository.getDarkThemeValue()
+            _isDarkTheme.emit(isDark)
         }
     }
 }

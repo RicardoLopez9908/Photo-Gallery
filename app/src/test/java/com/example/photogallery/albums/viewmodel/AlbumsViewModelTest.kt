@@ -51,4 +51,21 @@ class AlbumsViewModelTest {
             assert((viewModel.screenContent.value as Response.Error).exception.message == Mocks.EXCEPTION_MESSAGE)
         }
     }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun check_success_init_block_and_get_is_dark_theme_call() {
+        val repository = RepositorySuccessMock()
+        viewModel = AlbumsViewModel(repository)
+
+        runTest {
+            assert(viewModel.isDarkTheme.value == null)
+            repository.isDarkTheme = true
+            advanceUntilIdle()
+            assert(viewModel.isDarkTheme.value == repository.isDarkTheme)
+            viewModel.saveIsDarkThemeValue(false)
+            advanceUntilIdle()
+            assert((repository.isDarkTheme == false))
+        }
+    }
 }

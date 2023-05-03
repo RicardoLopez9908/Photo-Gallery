@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.photogallery.presentation.albums.view.AlbumsScreen
 import com.example.photogallery.presentation.albums.viewmodel.AlbumsViewModel
+import com.example.photogallery.presentation.initial.view.InitialScreen
 import com.example.photogallery.presentation.main.navigation.NavigationConstants.ALBUM_ID
 import com.example.photogallery.presentation.main.navigation.NavigationConstants.ENCODED_URL
 import com.example.photogallery.presentation.main.navigation.NavigationConstants.PHOTO_TITLE
@@ -26,8 +27,18 @@ fun SetupNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Albums.route
+        startDestination = Screen.Initial.route
     ) {
+        composable(route = Screen.Initial.route) {
+            InitialScreen {
+                navController.navigate(Screen.Albums.route) {
+                    launchSingleTop = true
+                    popUpTo(Screen.Initial.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
         composable(route = Screen.Albums.route) {
             val viewModel = hiltViewModel<AlbumsViewModel>()
             val state = viewModel.screenContent.collectAsState()

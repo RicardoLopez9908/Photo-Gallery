@@ -1,6 +1,7 @@
 package com.example.photogallery.data.di
 
 import android.content.Context
+import com.example.photogallery.BuildConfig
 import com.example.photogallery.data.api.PhotoGalleryApi
 import com.example.photogallery.data.source.preferences.PreferencesImpl
 import com.example.photogallery.domain.source.preferences.Preferences
@@ -21,7 +22,7 @@ object AppModule {
     @Singleton
     fun providePhotoGalleryApi(): PhotoGalleryApi =
         Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/") // todo: create constant to save this value
+            .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(PhotoGalleryApi::class.java)

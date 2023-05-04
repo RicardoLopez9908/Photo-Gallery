@@ -20,10 +20,10 @@ import com.example.photogallery.util.Response
 fun BaseScreenStateHandler(
     response: Response<Any?>,
     onTapRetry: () -> Unit,
-    successContent: @Composable () -> Unit
+    successContent: @Composable (data: Any?) -> Unit
 ) {
     when (response) {
-        is Response.Success -> successContent()
+        is Response.Success -> successContent(response.data)
         is Response.Loading -> LoadingScreen()
         is Response.Error -> ErrorScreen(
             e = response.exception,

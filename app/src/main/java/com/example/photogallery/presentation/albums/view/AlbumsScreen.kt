@@ -24,7 +24,6 @@ import com.example.photogallery.presentation.base.view.DefaultSearch
 import com.example.photogallery.util.Response
 
 @OptIn(ExperimentalFoundationApi::class)
-@Suppress("UNCHECKED_CAST")
 @Composable
 fun AlbumsScreen(
     response: Response<Any?>,
@@ -35,13 +34,13 @@ fun AlbumsScreen(
     BaseScreenStateHandler(
         onTapRetry = onTapRetry,
         response = response
-    ) {
-        val albumList = (response as Response.Success<List<AlbumData>>).data
+    ) { successData ->
+        val albumList = if (successData is List<*>) successData.filterIsInstance<AlbumData>() else emptyList()
         var searchState by rememberSaveable { mutableStateOf("") }
         val albumListFiltered = if (searchState.isEmpty()) {
             albumList
         } else {
-            albumList?.filter {
+            albumList.filter {
                 it.title.contains(searchState, ignoreCase = true)
             }
         }
@@ -58,7 +57,7 @@ fun AlbumsScreen(
                     }
                 )
             }
-            if (albumListFiltered.isNullOrEmpty()) {
+            if (albumListFiltered.isEmpty()) {
                 item(span = StaggeredGridItemSpan.FullLine) {
                     Text(
                         text = stringResource(id = R.string.empty_albums),
